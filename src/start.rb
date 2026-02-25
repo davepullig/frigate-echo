@@ -28,7 +28,11 @@ end
 
 begin
 	logger.info("Connecting to MQTT at #{CONFIG[:mqtt][:server]}")
-  MQTT::Client.connect(CONFIG[:mqtt][:server]) do |client|
+    MQTT::Client.connect(
+      :host => CONFIG[:mqtt][:server],
+      :username => CONFIG[:mqtt][:username],
+      :password => CONFIG[:mqtt][:password]
+    ) do |client|
   	logger.info("Connected. Listening to topic #{CONFIG[:mqtt][:topic]}")
     
     client.get(CONFIG[:mqtt][:topic]) do |topic, message_str|
